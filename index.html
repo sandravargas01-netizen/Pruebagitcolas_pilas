@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pila y Cola</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .box {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 15px;
+      width: 350px;
+      margin: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .push { background: #28a745; color: white; }
+    .pop { background: #dc3545; color: white; }
+
+    .enqueue { background: #007bff; color: white; }
+    .dequeue { background: #ff9800; color: white; }
+
+    .output {
+      margin-top: 15px;
+      min-height: 60px;
+      border: 2px dashed #ccc;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .item {
+      background: #333;
+      color: white;
+      padding: 8px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    .msg {
+      margin-top: 10px;
+      font-size: 14px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>📚 Simulación de Pila y Cola</h1>
+
+  <div class="container">
+
+    <!-- PILA -->
+    <div class="box">
+      <h2>Pila (Stack)</h2>
+
+      <input type="text" id="stackInput" placeholder="Ingrese valor">
+
+      <br>
+      <button class="push" onclick="push()">Insertar</button>
+      <button class="pop" onclick="pop()">Eliminar</button>
+
+      <div class="output" id="stackOutput"></div>
+      <div class="msg" id="stackMsg"></div>
+    </div>
+
+    <!-- COLA -->
+    <div class="box">
+      <h2>Cola (Queue)</h2>
+
+      <input type="text" id="queueInput" placeholder="Ingrese valor">
+
+      <br>
+      <button class="enqueue" onclick="enqueue()">Insertar</button>
+      <button class="dequeue" onclick="dequeue()">Eliminar</button>
+
+      <div class="output" id="queueOutput"></div>
+      <div class="msg" id="queueMsg"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // ===== PILA =====
+    let stack = [];
+
+    function push() {
+      let input = document.getElementById("stackInput");
+      let msg = document.getElementById("stackMsg");
+
+      if (input.value === "") {
+        msg.innerText = "Ingrese un valor";
+        return;
+      }
+
+      stack.push(input.value);
+      input.value = "";
+      msg.innerText = "";
+
+      renderStack();
+    }
+
+    function pop() {
+      let msg = document.getElementById("stackMsg");
+
+      if (stack.length === 0) {
+        msg.innerText = "La pila está vacía";
+        return;
+      }
+
+      stack.pop();
+      msg.innerText = "";
+
+      renderStack();
+    }
+
+    function renderStack() {
+      let container = document.getElementById("stackOutput");
+      container.innerHTML = "";
+
+      for (let i = stack.length - 1; i >= 0; i--) {
+        container.innerHTML += `<div class="item">${stack[i]}</div>`;
+      }
+    }
+
+    // ===== COLA =====
+    let queue = [];
+
+    function enqueue() {
+      let input = document.getElementById("queueInput");
+      let msg = document.getElementById("queueMsg");
+
+      if (input.value === "") {
+        msg.innerText = "Ingrese un valor";
+        return;
+      }
+
+      queue.push(input.value);
+      input.value = "";
+      msg.innerText = "";
+
+      renderQueue();
+    }
+
+    function dequeue() {
+      let msg = document.getElementById("queueMsg");
+
+      if (queue.length === 0) {
+        msg.innerText = "La cola está vacía";
+        return;
+      }
+
+      queue.shift();
+      msg.innerText = "";
+
+      renderQueue();
+    }
+
+    function renderQueue() {
+      let container = document.getElementById("queueOutput");
+      container.innerHTML = "";
+
+      queue.forEach(item => {
+        container.innerHTML += `<div class="item">${item}</div>`;
+      });
+    }
+  </script>
+
+</body>
+</html>
